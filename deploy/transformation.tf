@@ -18,7 +18,7 @@ resource "aws_glue_job" "ingestion" {
   max_retries = 0 
   name = "Ingestion_job-${random_id.random_id_generator.hex}" 
   description = "Ingesting data from s3" 
-  role_arn = "arn:aws:iam::199657276973:role/LabRole"
+  role_arn = "arn:aws:iam::436625658564:role/LabRole"    # change
   
   number_of_workers = 2 
   worker_type = "G.1X" 
@@ -37,7 +37,7 @@ resource "aws_glue_job" "cleaning" {
   max_retries = 0 
   name = "Cleaning_job-${random_id.random_id_generator.hex}" 
   description = "Cleaning and preprocessing" 
-  role_arn = "arn:aws:iam::199657276973:role/LabRole"
+  role_arn = "arn:aws:iam::436625658564:role/LabRole"    # change
   
   number_of_workers = 2 
   worker_type = "G.1X" 
@@ -54,7 +54,7 @@ resource "aws_glue_job" "cleaning" {
 #---------- STEP FUNCTION TO TRIGGER GLUE JOB AND NOTIFY---------------#
 resource "aws_sfn_state_machine" "glue_job_trigger" {
   name     = "group4stepfunction"
-  role_arn = "arn:aws:iam::199657276973:role/LabRole"
+  role_arn = "arn:aws:iam::199657276973:role/LabRole"    # change
 
   definition = <<EOF
 {
