@@ -1,0 +1,31 @@
+######################
+Kaggle -> S3
+######################
+
+pip3 install kaggle
+
+mkdir ~/.kaggle
+
+aws configure set aws_access_key_id <AWS_ACCESS_KEY_ID>
+
+aws configure set aws_secret_access_key <AWS_SECRET_ACCESS_KEY>
+
+aws configure set default_region us-east-1
+
+aws configure set output json
+
+aws --no-sign-request s3 cp s3://shubh-datalak-raw/kaggle.json ~/.kaggle
+
+export PATH=$PATH:~/.local/bin
+
+source ~/.bashrc
+
+pip3 install urllib3==1.26.8
+
+chmod 600 /home/ec2-user/.kaggle/kaggle.json
+
+kaggle datasets download -d allanbruno/airbnb-rio-de-janeiro
+
+unzip airbnb-rio-de-janeiro.zip
+
+aws s3 cp /home/ec2-user/total_data.csv s3://shubh-datalak-raw/
