@@ -24,11 +24,11 @@ resource "aws_glue_classifier" "csv_classifier" {
 
 resource "aws_glue_crawler" "rental_market_analysis" {
     name = "RMA_crawler-${random_id.random_id_generator.hex}"
-    role = "arn:aws:iam::199657276973:role/LabRole"
+    role = "arn:aws:iam::436625658564:role/LabRole"                 # change
     database_name = "rental_market_database"
 
     s3_target {
-      path = "s3://group4-enrich-data-zone/job2/rio-airbnb/"
+      path = "s3://airbnbclean/cleandata2/"        # change
     }
     tags = {
         product_type = "rental_market_analysis"
@@ -44,7 +44,7 @@ resource "aws_athena_workgroup" "rental_market_analysis_workgroup" {
 
 configuration {
     result_configuration {
-        output_location = "s3://group4-enrich-data-zone/queryresults"
+        output_location = "s3://airbnbclean/queryresults/"     # change
     }
   }
 }
