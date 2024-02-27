@@ -171,7 +171,7 @@ new_df = new_df.fillna({"security_deposit": 0})
 
 
 
-#22)extra_people: zero null
+#22)extra_people:
 
 
 from pyspark.sql.functions import when
@@ -334,6 +334,6 @@ new_df.coalesce(1).write \
 
 # in csv format
 
-#new_df.coalesce(1).write.mode("overwrite").option("header", "True").option("multiline", #True).csv("s3://final-044/sample/glue/")
+#new_df.coalesce(1).write.mode("overwrite").option("header", "True").option("multiline", #True).csv("s3://final-044/sample/glue/")###
 
 job.commit()

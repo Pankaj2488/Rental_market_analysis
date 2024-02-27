@@ -17,15 +17,14 @@ resource "random_id" "random_id_generator" {
 # resource "aws_sns_topic_subscription" "email_subscription" {
 #   topic_arn = aws_sns_topic.glue_job_notification.arn
 #   protocol  = "email"
-#   endpoint  = "prathameshnimbalkar2@gmail.com"
+#   endpoint  = "umamudkhede@gmail.com"
 # }
 
 variable "topic_arn" {
   description = "topic arn for sns"
   type        = string
-  default     = "arn:aws:sns:us-east-1:436625658564:glue_job_notification_topic"
+  default     = "arn:aws:sns:us-east-1:251020751257:glue_job_notification_topic"                      # change
 }
-
 
 ####--------------------------------------- S3 bucket --------------------------------------------####
 resource "aws_s3_bucket" "scripts" {
@@ -58,7 +57,7 @@ resource "aws_s3_bucket_acl" "scripts" {
   ]
 
   bucket = aws_s3_bucket.scripts.id
-  acl    = "public-read"
+  acl    = "public-read"    
 }
 
 ####--------------------------------------- EC2 Instance --------------------------------------------####

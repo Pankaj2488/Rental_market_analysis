@@ -21,7 +21,7 @@ spark = glueContext.spark_session
 job = Job(glueContext)
 job.init(args['JOB_NAME'], args)
 
-df_rds_new = spark.read.parquet('s3://airbnbraw/rdsraw/job1/')
+df_rds_new = spark.read.parquet('s3://airbnbprac/raw/')
 
 df = spark.read.format('csv').options(sep=",", escape='"', mode="PERMISSIVE", header=True, multiLine=True).load('s3://final-044/zip/total_data.csv')
 
@@ -33,7 +33,7 @@ selected_columns = [
 "security_deposit", "guests_included", "extra_people", "availability_30", "availability_60",
 "availability_90", "availability_365", "number_of_reviews", "review_scores_rating",
 "instant_bookable", "month", "minimum_minimum_nights", "maximum_maximum_nights",
-"calculated_host_listings_count", "cancellation_policy"
+"calculated_host_listings_count"
 ]
 
 
@@ -83,8 +83,8 @@ StructField("instant_bookable", StringType()),
 StructField("month", StringType()),
 StructField("minimum_minimum_nights", IntegerType()),
 StructField("maximum_maximum_nights", IntegerType()),
-StructField("calculated_host_listings_count", IntegerType()),
-StructField("cancellation_policy", StringType())
+StructField("calculated_host_listings_count", IntegerType())
+
 ])
 
 
@@ -295,7 +295,7 @@ new_df = new_df.withColumn("maximum_maximum_nights", round(col("maximum_maximum_
 
 # to write in s3 bucket cleaned data in parquet format
 
-output_path = "s3://airbnbclean/cleandata2/"
+output_path = "s3://airbnbprac/clean/"
 
 new_df.coalesce(1).write \
 .option("header", "True") \

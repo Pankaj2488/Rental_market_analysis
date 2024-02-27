@@ -9,7 +9,7 @@ jobs:
   terraform-action:
     name: Terraform
     runs-on: ubuntu-latest
-      
+    
     steps:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -53,7 +53,8 @@ jobs:
         working-directory: deploy
         run: |
           terraform apply -auto-approve
-          echo "::set-output name=status::success"
+          echo "::set-output name=status::success" 
+
 
       - name: Wait for 5 seconds
         if: ${{ always() }}
@@ -68,9 +69,11 @@ jobs:
       - name: Start Step Function Execution
         if: ${{ steps.apply.outputs.status == 'success' }}
         run: |
-          aws stepfunctions start-execution --state-machine-arn "arn:aws:states:us-east-1:199657276973:stateMachine:group4stepfunction"
+          aws stepfunctions start-execution --state-machine-arn "arn:aws:states:us-east-1:251020751257:stateMachine:group4stepfunction"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}    
+
+          

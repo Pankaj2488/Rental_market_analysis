@@ -2,13 +2,12 @@
 # # ####------------------------GLUE DATA-CATALOG & CRAWLER-------------------------------------------####
 
 # defining database
-# resource "aws_glue_catalog_database" "RentalMarket" {
-#     name = "rental_market_database"
-# }
+resource "aws_glue_catalog_database" "RentalMarket" {
+    name = "rental_market_database"
+}
 
 resource "aws_glue_classifier" "csv_classifier" {
-  name          = "CustomCSVClassifier-${random_id.random_id_generator.hex}"
-  
+  name          = "CustomCSVClassifier"
   
   csv_classifier {
 
@@ -17,35 +16,35 @@ resource "aws_glue_classifier" "csv_classifier" {
     delimiter              = ","
     disable_value_trimming = false
     quote_symbol           = "'"
-    
   
   }
 }
 
 
 resource "aws_glue_crawler" "rental_market_analysis" {
-    name = "RMA_crawler-${random_id.random_id_generator.hex}"
-    role = "arn:aws:iam::436625658564:role/LabRole"                 # change
-    database_name = "rental_market_database"
+    name          = "rental_market_analysis_crawler"
+    role          = "arn:aws:iam::251020751257:role/LabRole"                            # change
+    database_name = aws_glue_catalog_database.RentalMarket.name  # Corrected reference
 
     s3_target {
-      path = "s3://airbnbclean/cleandata2/"        # change
+      path = "s3://airbnbprac/clean/"                                                     # path change
     }
     tags = {
         product_type = "rental_market_analysis"
     }
     classifiers = [aws_glue_classifier.csv_classifier.name]
-    
-}
+}    
+
 
 ####-------------------------------- Athena ------------------------------------------####
 resource "aws_athena_workgroup" "rental_market_analysis_workgroup" {
-  name = "RMA-workgroup-${random_id.random_id_generator.hex}"
+  name = "rental_market_analysis_workgroup"
   force_destroy = true
 
 configuration {
     result_configuration {
-        output_location = "s3://airbnbclean/queryresults/"     # change
+        output_location = "s3://airbnbprac/queryResult/"                    #path change
     }
+
   }
 }
